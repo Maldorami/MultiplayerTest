@@ -9,6 +9,13 @@ public class HealthPackManager : NetworkBehaviour
 
     float timer;
     bool healthPackSpawned = false;
+    GameObject aux;
+
+    private void Start()
+    {
+        aux = Instantiate(healthPack, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+        aux.SetActive(false);
+    }
 
     private void Update()
     {
@@ -18,29 +25,26 @@ public class HealthPackManager : NetworkBehaviour
 
             if (timer > reSpawnTimer)
             {
-                GameObject aux = (GameObject)Instantiate(healthPack, transform.position, transform.rotation);
                 healthPackSpawned = true;
-                NetworkServer.Spawn(aux);
+                aux.SetActive(true);
+                
             }
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-        //Debug.Log(collision.gameObject.name);
-        //PlayerHealth health = collision.gameObject.GetComponent<PlayerHealth>();
-        //health.TakeDamage(-healing);
-        //healthPackSpawned = false;
-        //Destroy(healthPack);
-    //}
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        PlayerHealth health = collision.gameObject.GetComponent<PlayerHealth>();
+        PlayerHealth health = other.gameObject.GetComponent<PlayerHealth>();
         if (health != null)
         {
-            health.TakeDamage(10);
+            if (healthPackSpawned)
+            {
+                Debug.Log(other.name);
+                health.TakeDamage(-healing);
+                healthPackSpawned = false;
+                aux.SetActive(false);
+                timer = 0;
+            }
         }
     }
-
 }
