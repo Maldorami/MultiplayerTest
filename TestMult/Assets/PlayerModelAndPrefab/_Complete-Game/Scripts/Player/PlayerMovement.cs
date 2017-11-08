@@ -15,7 +15,7 @@ public class PlayerMovement : NetworkBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
 
-    public ParticleSystem particleSystem;
+    //public ParticleSystem particleSystem;
     
     void Awake()
     {
@@ -27,6 +27,9 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
+        if (PauseMenu.isOn)
+            return;
+
         if (!isLocalPlayer)
             return;
 
@@ -77,8 +80,8 @@ public class PlayerMovement : NetworkBehaviour
     [Command]
     void CmdShoot()
     {
-        particleSystem.Stop();
-        particleSystem.Play();
+        //particleSystem.Stop();
+        //particleSystem.Play();
 
         GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 10.0f;
