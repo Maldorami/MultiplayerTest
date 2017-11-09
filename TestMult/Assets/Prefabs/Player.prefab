@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 95395552803182172}
   - component: {fileID: 114428562241949752}
   - component: {fileID: 114681853387463610}
+  - component: {fileID: 114430172572208066}
   - component: {fileID: 114487065699852370}
   - component: {fileID: 114768496373707662}
   - component: {fileID: 114844645509803704}
@@ -398,6 +399,8 @@ MonoBehaviour:
   healthBar: {fileID: 224291568409256184}
   DestroyOnDeath: 0
   SpawnPoints: []
+  kills: 0
+  deaths: 0
 --- !u!114 &114429908254590746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -425,6 +428,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114430172572208066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1744972011507574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d447ddc00b2c74b9fd55a4e45bb311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114487065699852370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -454,7 +468,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1035896529923952, guid: 4940cd670da0e464e8422ff592936eba,
     type: 2}
   bulletSpawnPoint: {fileID: 4948746708752338}
-  particleSystem: {fileID: 198282936995610466}
 --- !u!114 &114768496373707662
 MonoBehaviour:
   m_ObjectHideFlags: 1

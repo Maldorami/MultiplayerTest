@@ -40,7 +40,7 @@ public class HealthPackManager : NetworkBehaviour
             if (healthPackSpawned)
             {
                 Debug.Log(other.name);
-                health.TakeDamage(-healing);
+                health.TakeDamage(-healing, null);
                 healthPackSpawned = false;
                 aux.SetActive(false);
                 timer = 0;

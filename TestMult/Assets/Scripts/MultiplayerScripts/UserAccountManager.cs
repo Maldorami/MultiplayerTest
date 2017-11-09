@@ -25,6 +25,8 @@ public class UserAccountManager : MonoBehaviour
     public static string LoggedIn_Data { get; protected set; }
     public static bool isLoggedIn { get; protected set; }
 
+    public delegate void OnDataReceivedCallback(string data);
+
     public void LogOut()
     {
         LoggedIn_Username = "";
@@ -68,14 +70,14 @@ public class UserAccountManager : MonoBehaviour
         }
     }
 
-    public void GetData()
+    public void GetData(OnDataReceivedCallback onDataReceived)
     {
         //Called when the player hits 'Get Data' to retrieve the data string on their account. Switches UI to 'Loading...' and starts coroutine to get the players data string from the server
         if (isLoggedIn)
-            StartCoroutine(GetData_numerator());
+            StartCoroutine(GetData_numerator(onDataReceived));
     }
 
-    IEnumerator GetData_numerator()
+    IEnumerator GetData_numerator(OnDataReceivedCallback onDataReceived)
     {
         string data = "ERROR";
         IEnumerator e = DCF.GetUserData(LoggedIn_Username, LoggedIn_Password); // << Send request to get the player's data string. Provides the username and password
@@ -95,6 +97,7 @@ public class UserAccountManager : MonoBehaviour
             data = response;
         }
 
-        LoggedIn_Data = data;
+        if(onDataReceived != null)
+            onDataReceived.Invoke(data);
     }
 }

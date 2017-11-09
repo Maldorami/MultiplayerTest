@@ -85,6 +85,7 @@ public class PlayerMovement : NetworkBehaviour
 
         GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 10.0f;
+        bullet.GetComponent<Bullet>().setOwner(this.gameObject);
         NetworkServer.Spawn(bullet);
         Destroy(bullet, 2.0f);
 
