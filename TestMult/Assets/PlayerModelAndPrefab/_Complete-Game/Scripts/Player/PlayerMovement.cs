@@ -41,13 +41,9 @@ public class PlayerMovement : NetworkBehaviour
         transform.position += new Vector3(h, 0, v);
 
         // Turn the player to face the mouse cursor.
-        // Create a ray from the mouse cursor on screen in the direction of the camera.
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // Create a RaycastHit variable to store information about what was hit by the ray.
         RaycastHit floorHit;
-        // Perform the raycast and if it hits something on the floor layer...
         if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask)){
-            // Create a vector from the player to the point on the floor the raycast from the mouse hit.
             Vector3 playerToMouse = floorHit.point;
             playerToMouse.y = 0f;
 
@@ -56,23 +52,14 @@ public class PlayerMovement : NetworkBehaviour
         }
 
         // Animate the player.
-        // Create a boolean that is true if either of the input axes is non-zero.
         bool walking = h != 0f || v != 0f;
-
-        // Tell the animator whether or not the player is walking.
         anim.SetBool("IsWalking", walking);
 
-
-        // Add the time since Update was last called to the timer.
-        timer += Time.deltaTime;
-
-        // If the Fire1 button is being press and it's time to fire...
-        if (Input.GetButton("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
+        
+        timer += Time.deltaTime;        
+        if (Input.GetButton("Fire1") && timer >= timeBetweenBullets)
         {
-            // ... shoot the gun.
             CmdShoot();
-
-            // Reset the timer.
             timer = 0f;
         }
     }
@@ -80,13 +67,11 @@ public class PlayerMovement : NetworkBehaviour
     [Command]
     void CmdShoot()
     {
-        //particleSystem.Stop();
-        //particleSystem.Play();
 
         GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 10.0f;
         bullet.GetComponent<Bullet>().setOwner(this.gameObject);
-        NetworkServer.Spawn(bullet);
+        NetworkServer.SpawnWithClientAuthority(bullet, connectionToClient);
         Destroy(bullet, 2.0f);
 
     }

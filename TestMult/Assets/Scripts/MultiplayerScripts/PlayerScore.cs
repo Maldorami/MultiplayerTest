@@ -7,10 +7,10 @@ public class PlayerScore : MonoBehaviour
 
     PlayerHealth player;
 
-    private void Start()
+    private void OnEnable()
     {
         player = GetComponent<PlayerHealth>();
-        SyncScore();
+        //SyncScore();
     }
 
     private void OnDestroy()

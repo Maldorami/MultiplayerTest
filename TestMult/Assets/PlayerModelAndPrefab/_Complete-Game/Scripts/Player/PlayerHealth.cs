@@ -19,11 +19,9 @@ public class PlayerHealth : NetworkBehaviour
         SpawnPoints = FindObjectsOfType<NetworkStartPosition>();
     }
 
-    public void TakeDamage(int amount, GameObject _source)
+    [ClientRpc]
+    public void RpcTakeDamage(int amount, GameObject _source)
     {
-        if (!isServer)
-            return;
-
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
@@ -31,9 +29,7 @@ public class PlayerHealth : NetworkBehaviour
                 Destroy(gameObject);
             else
             {
-                PlayerHealth _sourceHealth = _source.GetComponent<PlayerHealth>();
-                if (_sourceHealth != null) _sourceHealth.kills++;
-                deaths++;
+                actScore(_source);
                 currentHealth = maxHealth;
                 RpcSpawn();
             }
@@ -44,6 +40,14 @@ public class PlayerHealth : NetworkBehaviour
         }
 
     }
+
+    void actScore(GameObject _source)
+    {
+        PlayerHealth _sourceHealth = _source.GetComponent<PlayerHealth>();
+        if (_sourceHealth != null) _sourceHealth.kills++;
+        deaths++;
+    }
+
 
     void OnChangeHealth(int health)
     {

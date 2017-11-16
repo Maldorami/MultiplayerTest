@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
@@ -16,7 +14,7 @@ public class Bullet : MonoBehaviour {
         PlayerHealth health = collision.gameObject.GetComponent<PlayerHealth>();
         if(health != null)
         {
-            health.TakeDamage(10, owner);
+            health.RpcTakeDamage(10, owner);
         }
         Destroy(gameObject);
     }
