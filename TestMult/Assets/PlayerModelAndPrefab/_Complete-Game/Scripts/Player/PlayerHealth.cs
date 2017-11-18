@@ -44,7 +44,9 @@ public class PlayerHealth : NetworkBehaviour
     void actScore(GameObject _source)
     {
         PlayerHealth _sourceHealth = _source.GetComponent<PlayerHealth>();
-        if (_sourceHealth != null) _sourceHealth.kills++;
+        if (_sourceHealth == null) return;
+
+        _sourceHealth.kills++;
         deaths++;
     }
 

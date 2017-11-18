@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33379601691636934}
   - component: {fileID: 135087213246929940}
   - component: {fileID: 23872201889797358}
-  - component: {fileID: 54862717117958758}
   - component: {fileID: 114339932554233608}
   - component: {fileID: 114386065945215568}
   - component: {fileID: 114020192292319838}
+  - component: {fileID: 54873470084213122}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035896529923952}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54862717117958758
+--- !u!54 &54873470084213122
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
+  m_TransformSyncMode: 1
   m_SendInterval: 0
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
