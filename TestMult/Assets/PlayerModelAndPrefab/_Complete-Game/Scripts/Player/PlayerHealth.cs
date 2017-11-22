@@ -19,6 +19,12 @@ public class PlayerHealth : NetworkBehaviour
         SpawnPoints = FindObjectsOfType<NetworkStartPosition>();
     }
 
+    [Command]
+    public void CmdTakeDamage(int amount, GameObject _source)
+    {
+        RpcTakeDamage(amount, _source);
+    }
+
     [ClientRpc]
     public void RpcTakeDamage(int amount, GameObject _source)
     {
@@ -29,7 +35,8 @@ public class PlayerHealth : NetworkBehaviour
                 Destroy(gameObject);
             else
             {
-                actScore(_source);
+                if(_source != null) actScore(_source);
+
                 currentHealth = maxHealth;
                 RpcSpawn();
             }

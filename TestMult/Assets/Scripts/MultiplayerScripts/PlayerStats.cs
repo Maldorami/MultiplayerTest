@@ -20,4 +20,13 @@ public class PlayerStats : MonoBehaviour
         killCount.text = UserAccountDataTranslator.DataToKills(data).ToString() + " KILLS";
         deathCount.text = UserAccountDataTranslator.DataToDeath(data).ToString() + " DEATHS";
     }
+
+    public void RecibeData()
+    {
+        killCount.text = "Loading...";
+        deathCount.text = "Loading...";
+
+        if (UserAccountManager.isLoggedIn)
+            UserAccountManager.instance.GetData(OnReceivedData);
+    }
 }
