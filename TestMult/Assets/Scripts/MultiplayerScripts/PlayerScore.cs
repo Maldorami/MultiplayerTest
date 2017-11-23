@@ -1,30 +1,26 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerScore : MonoBehaviour
 {
 
     PlayerHealth player;
+    float timeBetweenSync = 1;
+    float timer = 0;
 
     private void OnEnable()
     {
         player = GetComponent<PlayerHealth>();
-        //SyncScore();
+        timer = 0;
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        if(player != null)
-        SyncNow();
-    }
-
-    IEnumerator SyncScore()
-    {
-        while (true)
+        timer += Time.deltaTime;
+        if (timer > timeBetweenSync)
         {
-            yield return new WaitForSeconds(5f);
             SyncNow();
+            timer = 0;
         }
     }
 

@@ -12,8 +12,8 @@ public class PlayerSetup : NetworkBehaviour {
     {
         if (isLocalPlayer)
         {
-            playerUIInstace = Instantiate(playerUIPrefab);
-            playerUIInstace.name = playerUIPrefab.name;
+            //playerUIInstace = Instantiate(playerUIPrefab);
+            //playerUIInstace.name = playerUIPrefab.name;
         }
     }
 

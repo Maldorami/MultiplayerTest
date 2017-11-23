@@ -11,9 +11,8 @@ public class PlayerMovement : NetworkBehaviour
     public float timeBetweenBullets = 0.15f;        // The time between each shot.
     float timer;                                    // A timer to determine when to fire.
     public GameObject bulletPrefab;
-
-    [SyncVar]
-    public Transform bulletSpawnPoint;
+    public GameObject bulletSpawn;
+    public GameObject playerModel;
 
     //public ParticleSystem particleSystem;
 
@@ -25,7 +24,7 @@ public class PlayerMovement : NetworkBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (PauseMenu.isOn)
             return;
@@ -37,7 +36,6 @@ public class PlayerMovement : NetworkBehaviour
         float h = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
         float v = Input.GetAxis("Vertical") * Time.deltaTime * speed;
         Vector3 playerToMouse = Vector3.zero;
-
         // Turn the player to face the mouse cursor.
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit floorHit;
@@ -47,31 +45,6 @@ public class PlayerMovement : NetworkBehaviour
             playerToMouse.y = 0f;
         }
 
-        CmdMoveAndAnimate(h, v, playerToMouse);
-
-        timer += Time.deltaTime;
-        if (Input.GetButton("Fire1") && timer >= timeBetweenBullets)
-        {
-            CmdShoot();
-            timer = 0;
-        }
-    }
-
-    [Command]
-    void CmdMoveAndAnimate(float h, float v, Vector3 playerToMouse)
-    {
-        RpcMoveAndAnimate(h, v, playerToMouse);
-    }
-
-    [Command]
-    void CmdShoot()
-    {
-        RpcFire();
-    }
-
-    [ClientRpc]
-    void RpcMoveAndAnimate(float h, float v, Vector3 playerToMouse)
-    {
         // Move the player around the scene.
         transform.position += new Vector3(h, 0, v);
         transform.LookAt(playerToMouse);
@@ -79,19 +52,34 @@ public class PlayerMovement : NetworkBehaviour
         // Animate the player.
         bool walking = h != 0f || v != 0f;
         anim.SetBool("IsWalking", walking);
-    }  
 
-    [ClientRpc]
-    void RpcFire()
+        timer += Time.deltaTime;
+        if (Input.GetButton("Fire1") && timer >= timeBetweenBullets)
+        {
+            CmdFire();
+            timer = 0;
+        }
+    }
+
+    [Command]
+    void CmdFire()
     {
-        GameObject bullet = (GameObject)Instantiate(bulletPrefab,
-           bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-        bullet.GetComponent<Bullet>().setOwner(this.gameObject);
+        // Create the Bullet from the Bullet Prefab
+        var bullet = (GameObject)Instantiate(
+            bulletPrefab,
+            bulletSpawn.transform.position,
+            bulletSpawn.transform.rotation);
 
+        // Add velocity to the bullet
+        //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+
+        bullet.GetComponent<Bullet>().owner = this.gameObject;
+
+        // Spawn the bullet on the Clients
         NetworkServer.Spawn(bullet);
-
-        bullet.SetActive(true);                
-        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
+        
+        // Destroy the bullet after 2 seconds
+        Destroy(bullet, 2.0f);
     }
 
     private void OnCollisionExit(Collision collision)
@@ -99,4 +87,10 @@ public class PlayerMovement : NetworkBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().isKinematic = false;
     }
+
+    public override void OnStartLocalPlayer()
+    {
+        //playerModel.layer = 9;
+    }
+
 }

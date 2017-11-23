@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 114844645509803704}
   - component: {fileID: 65284226704555928}
   - component: {fileID: 54932249620811786}
+  - component: {fileID: 114801228679996038}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -144,8 +145,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4948746708752338}
-  - component: {fileID: 114636454086550260}
-  - component: {fileID: 114170655560665976}
   m_Layer: 0
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
@@ -359,27 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a531d72c564ddb43ad4a42c5c191397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114170655560665976
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1845195841722186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.033333335
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &114202040551353880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -491,38 +469,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerUIPrefab: {fileID: 1585659729548222, guid: fb54ac2382a46944a95831016ab29310,
     type: 2}
---- !u!114 &114636454086550260
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1845195841722186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 237
-    i1: 35
-    i2: 178
-    i3: 162
-    i4: 21
-    i5: 220
-    i6: 224
-    i7: 228
-    i8: 74
-    i9: 51
-    i10: 19
-    i11: 78
-    i12: 225
-    i13: 185
-    i14: 208
-    i15: 140
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
 --- !u!114 &114681853387463610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -538,7 +484,8 @@ MonoBehaviour:
   timeBetweenBullets: 0.15
   bulletPrefab: {fileID: 1035896529923952, guid: 4940cd670da0e464e8422ff592936eba,
     type: 2}
-  bulletSpawnPoint: {fileID: 4948746708752338}
+  bulletSpawn: {fileID: 1845195841722186}
+  playerModel: {fileID: 1744972011507574}
 --- !u!114 &114768496373707662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -571,6 +518,25 @@ MonoBehaviour:
     i15: 140
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114801228679996038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1744972011507574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1267208747, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 4948746708752338}
+  m_ChildIndex: 0
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_MovementThreshold: 0.001
+  m_InterpolateRotation: 0.5
+  m_InterpolateMovement: 0.5
 --- !u!114 &114844645509803704
 MonoBehaviour:
   m_ObjectHideFlags: 1

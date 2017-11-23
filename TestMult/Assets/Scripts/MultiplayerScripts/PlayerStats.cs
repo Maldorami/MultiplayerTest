@@ -17,12 +17,16 @@ public class PlayerStats : MonoBehaviour
 
     void OnReceivedData(string data)
     {
+        if (killCount == null || deathCount == null) return;
+
         killCount.text = UserAccountDataTranslator.DataToKills(data).ToString() + " KILLS";
         deathCount.text = UserAccountDataTranslator.DataToDeath(data).ToString() + " DEATHS";
     }
 
     public void RecibeData()
     {
+        if (killCount == null || deathCount == null) return;
+
         killCount.text = "Loading...";
         deathCount.text = "Loading...";
 

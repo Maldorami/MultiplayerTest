@@ -24,15 +24,15 @@ GameObject:
   - component: {fileID: 23872201889797358}
   - component: {fileID: 114339932554233608}
   - component: {fileID: 114386065945215568}
-  - component: {fileID: 114020192292319838}
   - component: {fileID: 54088154856557550}
-  m_Layer: 0
+  - component: {fileID: 114290919488900926}
+  m_Layer: 10
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4419052082229212
 Transform:
   m_ObjectHideFlags: 1
@@ -100,7 +100,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &114020192292319838
+--- !u!114 &114290919488900926
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

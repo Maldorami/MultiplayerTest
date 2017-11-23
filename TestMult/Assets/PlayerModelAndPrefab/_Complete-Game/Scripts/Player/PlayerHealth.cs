@@ -18,16 +18,10 @@ public class PlayerHealth : NetworkBehaviour
     {
         SpawnPoints = FindObjectsOfType<NetworkStartPosition>();
     }
-
-    [Command]
+    
     public void CmdTakeDamage(int amount, GameObject _source)
     {
-        RpcTakeDamage(amount, _source);
-    }
-
-    [ClientRpc]
-    public void RpcTakeDamage(int amount, GameObject _source)
-    {
+        //RpcTakeDamage(amount, _source);
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
@@ -35,9 +29,8 @@ public class PlayerHealth : NetworkBehaviour
                 Destroy(gameObject);
             else
             {
-                if(_source != null) actScore(_source);
-
-                currentHealth = maxHealth;
+                if (_source != null) actScore(_source);
+                Invoke("CmdPlayerDeath", 0);
                 RpcSpawn();
             }
         }
@@ -45,7 +38,6 @@ public class PlayerHealth : NetworkBehaviour
         {
             if (currentHealth > maxHealth) currentHealth = maxHealth;
         }
-
     }
 
     void actScore(GameObject _source)
@@ -57,7 +49,6 @@ public class PlayerHealth : NetworkBehaviour
         deaths++;
     }
 
-
     void OnChangeHealth(int health)
     {
         healthBar.sizeDelta = new Vector2(health, healthBar.sizeDelta.y);
@@ -66,6 +57,7 @@ public class PlayerHealth : NetworkBehaviour
     [ClientRpc]
     void RpcSpawn()
     {
+        currentHealth = maxHealth;
         Vector3 spawnPoint = Vector3.zero;
 
         if(SpawnPoints != null && SpawnPoints.Length > 0)
@@ -74,6 +66,23 @@ public class PlayerHealth : NetworkBehaviour
         }
 
         transform.position = spawnPoint;
+    }
+
+    [Command]
+    void CmdPlayerDeath()
+    {
+        RpcPlayerDeath();
+    }
+
+    [ClientRpc]
+    void RpcPlayerDeath(){
+        if (isLocalPlayer)
+        {
+            deaths++;
+        }else
+        {
+            kills++;
+        }
     }
 
 }
